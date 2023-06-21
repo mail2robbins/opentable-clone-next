@@ -13,10 +13,10 @@ export default async function handler(
 ) {
   //   await prisma.table.deleteMany();
   // await prisma.review.deleteMany();
-  await prisma.item.deleteMany();
-  await prisma.restaurant.deleteMany();
-  await prisma.location.deleteMany();
-  await prisma.cuisine.deleteMany();
+  // await prisma.item.deleteMany();
+  // await prisma.restaurant.deleteMany();
+  // await prisma.location.deleteMany();
+  // await prisma.cuisine.deleteMany();
   // await prisma.user.deleteMany();
 
   await prisma.location.createMany({
