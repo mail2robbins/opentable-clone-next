@@ -3,13 +3,14 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-const SearchBar = () => {
+const SearchBar = ({ city }: { city?: string }) => {
   const router = useRouter();
   const [location, setLocation] = useState("");
 
   const handleSearch = () => {
-    if (location.trim() !== "") {
+    if (location && location.trim() !== "") {
       router.push(`/search?city=${location}`);
+      setLocation("");
     }
   };
 
@@ -26,7 +27,7 @@ const SearchBar = () => {
         className="rounded bg-red-600 px-9 py-2 text-white"
         onClick={() => handleSearch()}
       >
-        Let's go
+        Let&apos;s go
       </button>
     </div>
   );
