@@ -5,7 +5,11 @@ import { PRICE, PrismaClient, Restaurant } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const fetchRestaurantsByLocation = async (city?: string) => {
+const fetchRestaurantsByLocation = async (
+  city?: string,
+  cuisine?: string,
+  price?: PRICE
+) => {
   const select = {
     id: true,
     name: true,
@@ -19,21 +23,103 @@ const fetchRestaurantsByLocation = async (city?: string) => {
     cuisine: true,
   };
 
-  if (!city)
+  // console.log(city, cuisine, price);
+  // if (!city && !cuisine && !price)
+  //   return prisma.restaurant.findMany({
+  //     select,
+  //   });
+
+  // const where: any = {};
+
+  // if (!city && city !== "") {
+  //   const locationSearch = {
+  //     name: {
+  //       equals: city?.toLowerCase(),
+  //     },
+  //   };
+  //   where.location = locationSearch;
+  // }
+
+  // if (!cuisine && cuisine !== "") {
+  //   const cuisineSearch = {
+  //     name: {
+  //       equals: cuisine?.toLowerCase(),
+  //     },
+  //   };
+  //   where.cuisine = cuisineSearch;
+  // }
+
+  // if (!price) {
+  //   const priceSearch = {
+  //     equals: price,
+  //   };
+  //   where.price = priceSearch;
+  // }
+
+  // return prisma.restaurant.findMany({
+  //   where,
+  //   select,
+  // });
+
+  console.log(city, cuisine, price);
+  if (!city && !cuisine && !price)
     return prisma.restaurant.findMany({
       select,
     });
 
-  return prisma.restaurant.findMany({
-    where: {
-      location: {
-        name: {
-          equals: city.toLowerCase(),
+  if (city !== "" && cuisine !== "") {
+    return prisma.restaurant.findMany({
+      where: {
+        location: {
+          name: {
+            equals: city?.toLowerCase(),
+          },
+        },
+        cuisine: {
+          name: { equals: cuisine?.toLowerCase() },
+        },
+        price: {
+          equals: price,
         },
       },
-    },
-    select,
-  });
+      select,
+    });
+  } else if (city === "" && cuisine !== "") {
+    return prisma.restaurant.findMany({
+      where: {
+        cuisine: {
+          name: { equals: cuisine?.toLowerCase() },
+        },
+        price: {
+          equals: price,
+        },
+      },
+      select,
+    });
+  } else if (city !== "" && cuisine === "") {
+    return prisma.restaurant.findMany({
+      where: {
+        location: {
+          name: {
+            equals: city?.toLowerCase(),
+          },
+        },
+        price: {
+          equals: price,
+        },
+      },
+      select,
+    });
+  } else if (city === "" && cuisine === "") {
+    return prisma.restaurant.findMany({
+      where: {
+        price: {
+          equals: price,
+        },
+      },
+      select,
+    });
+  }
 };
 
 const fetchLocations = async () => {
@@ -47,32 +133,36 @@ const fetchLocations = async () => {
   return locations;
 };
 
-const fetchCusines = async () => {
-  const cusines = await prisma.cuisine.findMany({
+const fetchCuisines = async () => {
+  const cuisines = await prisma.cuisine.findMany({
     orderBy: [{ name: "asc" }],
     select: { id: true, name: true },
   });
 
-  if (!cusines) throw new Error();
+  if (!cuisines) throw new Error();
 
-  return cusines;
+  return cuisines;
 };
 
 const SearchPage = async ({
   searchParams,
 }: {
-  searchParams: { city?: string; cusine?: string; price?: PRICE };
+  searchParams: { city?: string; cuisine?: string; price?: PRICE };
 }) => {
-  const restaurants = await fetchRestaurantsByLocation(searchParams.city);
+  const restaurants = await fetchRestaurantsByLocation(
+    searchParams.city,
+    searchParams.cuisine,
+    searchParams.price
+  );
   const locations = await fetchLocations();
-  const cusines = await fetchCusines();
+  const cuisines = await fetchCuisines();
   return (
     <>
       <SearchHeader city={searchParams.city} />
       <div className="flex py-4 m-auto w-2/3 justify-between items-start">
         <SearchSideBar
           locations={locations}
-          cusines={cusines}
+          cuisines={cuisines}
           searchParams={searchParams}
         />
         {restaurants.length === 0 ? (
