@@ -21,6 +21,7 @@ const fetchRestaurantsByLocation = async (
     price: true,
     location: true,
     cuisine: true,
+    reviews: true,
   };
 
   // console.log(city, cuisine, price);
@@ -61,7 +62,7 @@ const fetchRestaurantsByLocation = async (
   //   select,
   // });
 
-  console.log(city, cuisine, price);
+  //console.log(city, cuisine, price);
   if (!city && !cuisine && !price)
     return prisma.restaurant.findMany({
       select,
@@ -165,13 +166,13 @@ const SearchPage = async ({
           cuisines={cuisines}
           searchParams={searchParams}
         />
-        {restaurants.length === 0 ? (
+        {restaurants?.length === 0 ? (
           <div className="w-5/6">
             <p>No restaurants available matching the search term</p>
           </div>
         ) : (
           <div className="w-5/6">
-            {restaurants.map((restaurant) => (
+            {restaurants?.map((restaurant) => (
               <SearchCard key={restaurant.id} restaurant={restaurant} />
             ))}
           </div>
