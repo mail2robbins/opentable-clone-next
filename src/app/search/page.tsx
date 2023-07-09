@@ -129,7 +129,7 @@ const fetchLocations = async () => {
     select: { id: true, name: true },
   });
 
-  if (!locations) throw new Error();
+  if (!locations) throw new Error("Cannot find location!");
 
   return locations;
 };
@@ -140,7 +140,7 @@ const fetchCuisines = async () => {
     select: { id: true, name: true },
   });
 
-  if (!cuisines) throw new Error();
+  if (!cuisines) throw new Error("Cannot find cuisine!");
 
   return cuisines;
 };
