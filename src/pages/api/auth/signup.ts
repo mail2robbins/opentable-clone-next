@@ -3,6 +3,7 @@ import validator from "validator";
 import { PrismaClient } from "@prisma/client"
 import bcrypt from "bcrypt"
 import * as jose from "jose"
+import { setCookie } from "cookies-next"
 
 const prisma = new PrismaClient()
 
@@ -64,8 +65,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 .sign(secret)
 
 
+            setCookie("opentablejwt", token, { req, res, maxAge: 60 * 6 * 24 })
+
             return res.status(200).json({
-                token
+                firstName: user.first_name,
+                lastName: user.last_name,
+                phone: user.phone,
+                email: user.email,
+                city: user.city,
             })
         }
         catch (err: any) {

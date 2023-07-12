@@ -29,19 +29,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 return res.status(400).json({ errorMessage: errors[0] })
             }
 
-            const userWithEmail = await prisma.user.findUnique({
+            const user = await prisma.user.findUnique({
                 where: {
                     email
                 }
             })
 
 
-            if (!userWithEmail) {
+            if (!user) {
                 return res.status(401).json({ errorMessage: "Email or Password is invalid" })
             }
 
 
-            const isMatch = await bcrypt.compare(password, userWithEmail.password)
+            const isMatch = await bcrypt.compare(password, user.password)
             if (!isMatch) {
                 return res.status(401).json({ errorMessage: "Invalid user login" })
             }
@@ -57,11 +57,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             setCookie("opentablejwt", token, { req, res, maxAge: 60 * 6 * 24 })
 
             return res.status(200).json({
-                firstName: userWithEmail.first_name,
-                lastName: userWithEmail.last_name,
-                phone: userWithEmail.phone,
-                email: userWithEmail.email,
-                city: userWithEmail.city,
+                firstName: user.first_name,
+                lastName: user.last_name,
+                phone: user.phone,
+                email: user.email,
+                city: user.city,
             })
         }
         catch (err: any) {
