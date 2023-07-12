@@ -68,6 +68,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             setCookie("opentablejwt", token, { req, res, maxAge: 60 * 6 * 24 })
 
             return res.status(200).json({
+                id: user.id,
                 firstName: user.first_name,
                 lastName: user.last_name,
                 phone: user.phone,

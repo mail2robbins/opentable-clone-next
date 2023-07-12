@@ -50,7 +50,6 @@ const useAuth = () => {
         }
     }
 
-
     return {
         signin, signup
     }
