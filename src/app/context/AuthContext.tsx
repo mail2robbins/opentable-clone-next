@@ -32,7 +32,7 @@ export const AuthenticationContext = createContext<AuthState>({
 
 const AuthContext = ({ children }: { children: React.ReactNode }) => {
   const [authState, setAuthState] = useState<State>({
-    loading: false,
+    loading: true,
     data: null,
     error: null,
   });
@@ -42,7 +42,7 @@ const AuthContext = ({ children }: { children: React.ReactNode }) => {
     try {
       const jwt = getCookie("opentablejwt");
       if (!jwt) {
-        return setAuthState({ data: null, error: null, loading: true });
+        return setAuthState({ data: null, error: null, loading: false });
       }
 
       const fetchResponse = await axios.get(
@@ -55,7 +55,6 @@ const AuthContext = ({ children }: { children: React.ReactNode }) => {
       ///// to set the header to all subsequent axios calls
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
 
-      console.log(fetchResponse);
       setAuthState({
         data: fetchResponse.data,
         error: null,

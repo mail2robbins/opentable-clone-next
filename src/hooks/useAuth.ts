@@ -1,6 +1,7 @@
 import { AuthenticationContext } from "@/app/context/AuthContext"
 import axios from "axios"
 import { useContext } from "react"
+import { deleteCookie } from "cookies-next";
 
 const useAuth = () => {
     const { data, error, loading, setAuthState } = useContext(AuthenticationContext)
@@ -11,7 +12,6 @@ const useAuth = () => {
         try {
             const signinResponse = await axios.post("http://localhost:5001/api/auth/signin", { email, password })
 
-            console.log(signinResponse)
             setAuthState({ data: signinResponse.data, error: null, loading: false })
             handleClose()
         } catch (err: any) {
@@ -42,7 +42,6 @@ const useAuth = () => {
                 phone
             })
 
-            console.log(signinResponse)
             setAuthState({ data: signinResponse.data, error: null, loading: false })
             handleClose()
         } catch (err: any) {
@@ -50,8 +49,13 @@ const useAuth = () => {
         }
     }
 
+    const signout = async () => {
+        deleteCookie("opentablejwt")
+        setAuthState({ data: null, error: null, loading: false })
+    }
+
     return {
-        signin, signup
+        signin, signup, signout
     }
 }
 
