@@ -61,7 +61,10 @@ const RestaurantDetails = async ({ params }: { params: { slug: string } }) => {
         <RestaurantDetailsReviews reviews={restaurant.reviews} />
       </div>
       <div className="w-[27%] relative text-reg">
-        <RestaurantReservation />
+        <RestaurantReservation
+          openTime={restaurant.open_time}
+          closeTime={restaurant.close_time}
+        />
       </div>
     </>
   );
