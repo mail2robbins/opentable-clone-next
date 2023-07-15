@@ -99,7 +99,7 @@ export default function LoginModal({ isSignIn }: { isSignIn: boolean }) {
         <Box sx={style}>
           {loading ? (
             <div className="py-24 px-2 h-[600px] flex justify-center">
-              <CircularProgress />
+              <CircularProgress variant="indeterminate" disableShrink />
             </div>
           ) : (
             <div className="p-2 h-[600px]">
