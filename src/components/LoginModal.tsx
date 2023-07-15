@@ -21,10 +21,15 @@ const style = {
 
 export default function LoginModal({ isSignIn }: { isSignIn: boolean }) {
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    setAuthState({ data: null, error: null, loading: false });
+    setOpen(true);
+  };
   const handleClose = () => setOpen(false);
   const { signin, signup } = useAuth();
-  const { data, loading, error } = useContext(AuthenticationContext);
+  const { data, loading, error, setAuthState } = useContext(
+    AuthenticationContext
+  );
 
   const [inputs, setInputs] = useState({
     firstName: "",

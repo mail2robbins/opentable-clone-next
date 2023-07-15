@@ -5,7 +5,6 @@ import LoginModal from "./LoginModal";
 import { AuthenticationContext } from "@/app/context/AuthContext";
 import { useContext } from "react";
 import useAuth from "@/hooks/useAuth";
-import FacebookCircularProgress from "./FacebookProgress";
 
 const NavBar = () => {
   const { data, loading, error } = useContext(AuthenticationContext);
@@ -17,15 +16,7 @@ const NavBar = () => {
       </Link>
       <div>
         <div className="flex">
-          {loading ? (
-            <div className="h-[30px] flex justify-center">
-              <FacebookCircularProgress
-                size={30}
-                value={100}
-                variant="indeterminate"
-              />
-            </div>
-          ) : data?.firstName ? (
+          {data?.firstName ? (
             <>
               <p className="mt-1 mr-3">Hello {data.firstName}</p>
               <button
