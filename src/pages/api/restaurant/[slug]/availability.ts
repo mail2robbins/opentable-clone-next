@@ -112,7 +112,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return timeIsAfterOpeningHour && timeIsBeforeClosingHour
     })
 
-    return res.status(200).json({
+    return res.status(200).json(
         filteredAvailabilities
-    })
+    )
 }
