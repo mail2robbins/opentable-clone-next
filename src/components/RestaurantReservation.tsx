@@ -128,7 +128,7 @@ const RestaurantReservation = ({
             {data.map((time, index) => {
               return time.available ? (
                 <Link
-                  href={`/reserve/${slug}?date=${day}T${time.time}`}
+                  href={`/reserve/${slug}?date=${day}T${time.time}&partySize=${partySize}`}
                   key={index}
                   className="bg-red-600 rounded w-[40%] text-center py-2 m-2 text-white font-bold h-9 text-sm"
                 >

@@ -15,6 +15,7 @@ export interface Restaurant {
   price: PRICE;
   location: Location;
   cuisine: Cuisine;
+  main_image: string;
 }
 
 const fetchRestaurantBySlug = async (slug: string): Promise<Restaurant> => {
@@ -31,6 +32,7 @@ const fetchRestaurantBySlug = async (slug: string): Promise<Restaurant> => {
       price: true,
       location: true,
       cuisine: true,
+      main_image: true,
     },
   });
 
