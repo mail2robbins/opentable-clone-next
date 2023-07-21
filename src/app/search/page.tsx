@@ -24,45 +24,6 @@ const fetchRestaurantsByLocation = async (
     reviews: true,
   };
 
-  // console.log(city, cuisine, price);
-  // if (!city && !cuisine && !price)
-  //   return prisma.restaurant.findMany({
-  //     select,
-  //   });
-
-  // const where: any = {};
-
-  // if (!city && city !== "") {
-  //   const locationSearch = {
-  //     name: {
-  //       equals: city?.toLowerCase(),
-  //     },
-  //   };
-  //   where.location = locationSearch;
-  // }
-
-  // if (!cuisine && cuisine !== "") {
-  //   const cuisineSearch = {
-  //     name: {
-  //       equals: cuisine?.toLowerCase(),
-  //     },
-  //   };
-  //   where.cuisine = cuisineSearch;
-  // }
-
-  // if (!price) {
-  //   const priceSearch = {
-  //     equals: price,
-  //   };
-  //   where.price = priceSearch;
-  // }
-
-  // return prisma.restaurant.findMany({
-  //   where,
-  //   select,
-  // });
-
-  //console.log(city, cuisine, price);
   if (!city && !cuisine && !price)
     return prisma.restaurant.findMany({
       select,

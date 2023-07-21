@@ -23,8 +23,6 @@ const RestaurantReservation = ({
   const [partySize, setPartySize] = useState("2");
   const [day, setDay] = useState(new Date().toISOString().split("T")[0]);
 
-  console.log({ data });
-
   const handleChangeDate = (date: Date | null) => {
     if (date) {
       setDay(date.toISOString().split("T")[0]);
@@ -60,7 +58,7 @@ const RestaurantReservation = ({
   return (
     <div className="relative w-[250px] bg-white rounded p-3 shadow">
       <div className="text-center border-b pb-2 font-bold">
-        <h4 className="mr-7 text-reg font-bold">Make a Reservation {day}</h4>
+        <h4 className="mr-7 text-reg font-bold">Make a Reservation</h4>
       </div>
       <div className="my-3 flex flex-col">
         <label htmlFor="">Party size</label>
