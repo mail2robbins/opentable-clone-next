@@ -52,6 +52,16 @@ export const findAvailableTables = async ({ day, time, restaurant, res }: {
         }, bookingTablesObj[booking.booking_time.toISOString()])
     })
 
+    // //another way of doing the above section
+    // bookings.forEach((booking) => {
+    //     const bookingTimeKey = booking.booking_time.toISOString();
+    //     if (!bookingTablesObj.hasOwnProperty(bookingTimeKey)) {
+    //         bookingTablesObj[bookingTimeKey] = {};
+    //     }
+    //     booking.tables.forEach((table) => {
+    //         bookingTablesObj[bookingTimeKey][table.table_id] = true;
+    //     });
+    // });
 
     const tables = restaurant.tables;
 
