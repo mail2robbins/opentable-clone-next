@@ -6,7 +6,7 @@ import DatePicker from "react-datepicker";
 import { useState } from "react";
 import useAvailability from "@/hooks/useAvailability";
 import { CircularProgress } from "@mui/material";
-import { convertToDisplayTime } from "@/utils/convertToDisplayTime";
+import { Time, convertToDisplayTime } from "@/utils/convertToDisplayTime";
 
 const RestaurantReservation = ({
   openTime,
@@ -132,7 +132,7 @@ const RestaurantReservation = ({
                   key={index}
                   className="bg-red-600 rounded w-[40%] text-center py-2 m-2 text-white font-bold h-9 text-sm"
                 >
-                  {convertToDisplayTime(time.time)}
+                  {convertToDisplayTime(time.time as Time)}
                 </Link>
               ) : (
                 <button
@@ -140,7 +140,7 @@ const RestaurantReservation = ({
                   className="bg-gray-400 rounded w-[40%] px-4 m-2 text-white font-bold h-9 text-sm"
                   disabled
                 >
-                  {convertToDisplayTime(time.time)}
+                  {convertToDisplayTime(time.time as Time)}
                 </button>
               );
             })}
