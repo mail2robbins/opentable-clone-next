@@ -10,7 +10,7 @@ const useAuth = () => {
         { email: string, password: string }, handleClose: () => void) => {
         setAuthState({ data: null, error: null, loading: true })
         try {
-            const signinResponse = await axios.post("http://localhost:5001/api/auth/signin", { email, password })
+            const signinResponse = await axios.post(`${process.env.OPEN_TABLE_API_URL}/api/auth/signin`, { email, password })
 
             setAuthState({ data: signinResponse.data, error: null, loading: false })
             handleClose()
@@ -35,7 +35,7 @@ const useAuth = () => {
         handleClose: () => void) => {
         setAuthState({ data: null, error: null, loading: true })
         try {
-            const signinResponse = await axios.post("http://localhost:5001/api/auth/signup", {
+            const signinResponse = await axios.post(`${process.env.OPEN_TABLE_API_URL}/api/auth/signup`, {
                 email, password, firstName,
                 lastName,
                 city,

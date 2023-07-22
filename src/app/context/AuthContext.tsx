@@ -46,7 +46,7 @@ const AuthContext = ({ children }: { children: React.ReactNode }) => {
       }
 
       const fetchResponse = await axios.get(
-        "http://localhost:5001/api/auth/me",
+        `${process.env.OPEN_TABLE_API_URL}/api/auth/me`,
         {
           headers: { Authorization: `Bearer ${jwt}` },
         }
