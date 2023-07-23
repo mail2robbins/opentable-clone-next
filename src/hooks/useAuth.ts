@@ -15,7 +15,7 @@ const useAuth = () => {
             setAuthState({ data: signinResponse.data, error: null, loading: false })
             handleClose()
         } catch (err: any) {
-            setAuthState({ data: null, error: err.response.data.errorMessage, loading: false })
+            setAuthState({ data: null, error: err.response?.data?.errorMessage ? err.response?.data?.errorMessage : err.message, loading: false })
         }
     }
 
@@ -45,7 +45,7 @@ const useAuth = () => {
             setAuthState({ data: signinResponse.data, error: null, loading: false })
             handleClose()
         } catch (err: any) {
-            setAuthState({ data: null, error: err.response.data.errorMessage, loading: false })
+            setAuthState({ data: null, error: err.response?.data?.errorMessage ? err.response?.data?.errorMessage : err.message, loading: false })
         }
     }
 
