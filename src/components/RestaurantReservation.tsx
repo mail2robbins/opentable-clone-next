@@ -7,6 +7,7 @@ import { useState } from "react";
 import useAvailability from "@/hooks/useAvailability";
 import { CircularProgress } from "@mui/material";
 import { Time, convertToDisplayTime } from "@/utils/convertToDisplayTime";
+import { format } from "date-fns";
 
 const RestaurantReservation = ({
   openTime,
@@ -21,11 +22,11 @@ const RestaurantReservation = ({
   const { loading, data, error, fetchAvailability } = useAvailability();
   const [time, setTime] = useState(openTime);
   const [partySize, setPartySize] = useState("2");
-  const [day, setDay] = useState(new Date().toISOString().split("T")[0]);
+  const [day, setDay] = useState(format(new Date(), "yyyy-MM-dd"));
 
   const handleChangeDate = (date: Date | null) => {
     if (date) {
-      setDay(date.toISOString().split("T")[0]);
+      setDay(format(date, "yyyy-MM-dd"));
       return setSelectedDate(date);
     }
     return setSelectedDate(null);
@@ -115,7 +116,12 @@ const RestaurantReservation = ({
           disabled={loading}
         >
           {loading ? (
-            <CircularProgress color="inherit" value={100} />
+            <CircularProgress
+              color="inherit"
+              value={100}
+              variant="indeterminate"
+              disableShrink
+            />
           ) : (
             "Find a Time"
           )}

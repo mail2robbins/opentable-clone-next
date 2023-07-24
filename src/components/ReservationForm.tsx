@@ -136,7 +136,11 @@ const ReservationForm = ({
             onClick={handleClick}
           >
             {loading ? (
-              <CircularProgress color="inherit" />
+              <CircularProgress
+                color="inherit"
+                variant="indeterminate"
+                disableShrink
+              />
             ) : (
               "Complete reservation"
             )}
