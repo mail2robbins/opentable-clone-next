@@ -3,6 +3,7 @@
 import { AuthenticationContext } from "@/app/context/AuthContext";
 import useReservation from "@/hooks/useReservation";
 import { CircularProgress } from "@mui/material";
+import Link from "next/link";
 import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 
 const ReservationForm = ({
@@ -66,11 +67,19 @@ const ReservationForm = ({
       {didBook ? (
         <>
           <div className="mt-4">
-            <h1 className="font-bold text-3xl mt-10 mb-7 pb-5">
+            <h1 className="font-bold text-3xl mt-10 mb-1">
               You are all booked up
             </h1>
             <div className="mt-1">
               <p>Enjoy your food!</p>
+            </div>
+            <div className="mt-6">
+              <Link
+                href=""
+                className="font-bold text-gray-700 text-sm decoration underline"
+              >
+                Back to Home
+              </Link>
             </div>
           </div>
         </>
