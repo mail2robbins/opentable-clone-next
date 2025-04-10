@@ -4,7 +4,7 @@ const Header = () => {
   return (
     <div className="h-64 bg-gradient-to-r from-[#0f1f47] to-[#5f6984] p-4 sm:p-6 md:p-8 overflow-hidden">
       {/* Background pattern overlay */}
-      <div className="absolute inset-0 opacity-10 bg-[url('/pattern.png')] bg-repeat"></div>
+      {/* <div className="absolute inset-0 opacity-10 bg-[url('/pattern.png')] bg-repeat"></div> */}
       
       {/* Content container */}
       <div className="relative z-10 h-full flex flex-col justify-center items-center text-center max-w-5xl mx-auto">
