@@ -7,16 +7,20 @@ import LoginModalInputs from "./LoginModalInputs";
 import useAuth from "@/hooks/useAuth";
 import { AuthenticationContext } from "@/app/context/AuthContext";
 import { Alert, CircularProgress } from "@mui/material";
+import { X } from "lucide-react";
 
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: "90%",
+  maxWidth: 500,
   bgcolor: "background.paper",
   boxShadow: 24,
-  p: 4,
+  p: 0,
+  borderRadius: "0.75rem",
+  overflow: "hidden",
 };
 
 export default function LoginModal({ isSignIn }: { isSignIn: boolean }) {
@@ -78,13 +82,15 @@ export default function LoginModal({ isSignIn }: { isSignIn: boolean }) {
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
+  
   return (
     <div>
       <button
-        className={`${renderContent(
-          "bg-blue-400 text-white",
-          ""
-        )} border p-1 px-4 rounded mr-3`}
+        className={`${
+          isSignIn 
+            ? "bg-red-600 hover:bg-red-700 text-white" 
+            : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+        } transition-colors duration-200 border p-1 px-4 rounded-md text-sm font-medium shadow-sm`}
         onClick={handleOpen}
       >
         {renderContent("Sign In", "Sign Up")}
@@ -102,37 +108,59 @@ export default function LoginModal({ isSignIn }: { isSignIn: boolean }) {
               <CircularProgress variant="indeterminate" disableShrink />
             </div>
           ) : (
-            <div className="p-2 h-[600px]">
-              {error ? (
-                <Alert severity="error" className="mb-4">
-                  {error}
-                </Alert>
-              ) : null}
-              <div className="uppercase font-bold text-center pb-2 border-b mb-2">
-                <p className="text-sm">
+            <div className="h-[600px] flex flex-col">
+              {/* Header with close button */}
+              <div className="flex justify-between items-center p-4 border-b">
+                <h2 className="text-xl font-semibold">
                   {renderContent("Sign In", "Create Account")}
-                </p>
-              </div>
-              <div className="m-auto">
-                <h2 className="text-2xl font-light text-center">
-                  {renderContent(
-                    "Log into your Account",
-                    "Create your OpenTable Account"
-                  )}
                 </h2>
+                <button 
+                  onClick={handleClose}
+                  className="p-1 rounded-full hover:bg-gray-100 transition-colors duration-200"
+                  aria-label="Close"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+              
+              <div className="p-6 flex-1 overflow-y-auto">
+                {error ? (
+                  <Alert severity="error" className="mb-4">
+                    {error}
+                  </Alert>
+                ) : null}
+                
+                <div className="mb-6">
+                  <h3 className="text-lg font-light text-center text-gray-600">
+                    {renderContent(
+                      "Log into your Account",
+                      "Create your OpenTable Account"
+                    )}
+                  </h3>
+                </div>
+                
                 <LoginModalInputs
                   inputs={inputs}
                   handleChangeInput={handleChangeInput}
                   isSignIn={isSignIn}
                 />
 
-                <button
-                  className="uppercase bg-red-600 w-full text-white p-3 rounded text-sm mb-5 disabled:bg-gray-400"
-                  disabled={disabled}
-                  onClick={handleClick}
-                >
-                  {renderContent("Sign In", "Create Account")}
-                </button>
+                <div className="mt-6 space-y-3">
+                  <button
+                    className="uppercase bg-red-600 w-full text-white p-3 rounded-md text-sm font-medium hover:bg-red-700 transition-colors duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed shadow-sm"
+                    disabled={disabled}
+                    onClick={handleClick}
+                  >
+                    {renderContent("Sign In", "Create Account")}
+                  </button>
+                  
+                  <button
+                    className="w-full p-3 rounded-md text-sm font-medium border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors duration-200"
+                    onClick={handleClose}
+                  >
+                    Cancel
+                  </button>
+                </div>
               </div>
             </div>
           )}
