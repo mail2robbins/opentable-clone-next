@@ -57,7 +57,7 @@ const RestaurantLayout = async ({
         name={restaurant.name}
         location={restaurant.location.name}
       />
-      <div className="flex m-auto w-2/3 justify-between items-start 0 -mt-11">
+      <div className="flex m-auto w-full justify-between items-start 0 -mt-11">
         {children}
       </div>
     </>
