@@ -259,7 +259,7 @@ const ReservationForm = ({
           </button>
           
           <p className="mt-4 text-xs text-gray-500 text-center">
-            By clicking "Complete Reservation" you agree to the OpenTable Terms
+            By clicking &quot;Complete Reservation&quot; you agree to the OpenTable Terms
             of Use and Privacy Policy. Standard text message rates may apply.
             You may opt out of receiving text messages at any time.
           </p>
