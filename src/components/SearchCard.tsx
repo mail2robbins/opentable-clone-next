@@ -62,15 +62,19 @@ const SearchCard = ({
                 {restaurant.name}
               </h2>
               
-              {/* Rating */}
-              <div className="flex items-center mb-3">
-                <Stars reviews={restaurant.reviews} />
+              {/* Rating - Fixed layout to prevent overlapping */}
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                <div className="flex items-center">
+                  <Stars reviews={restaurant.reviews} />
+                </div>
+                
                 {ratingText && (
-                  <span className={`ml-2 text-sm font-medium ${ratingColor}`}>
+                  <span className={`text-sm font-medium ${ratingColor}`}>
                     {ratingText}
                   </span>
                 )}
-                <span className="ml-2 text-sm text-gray-500">
+                
+                <span className="text-sm text-gray-500">
                   ({restaurant.reviews.length} {restaurant.reviews.length === 1 ? 'review' : 'reviews'})
                 </span>
               </div>
