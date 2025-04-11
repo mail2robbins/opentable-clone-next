@@ -1,11 +1,19 @@
 import { Item } from "@prisma/client";
+import { DollarSign } from "lucide-react";
 
 const MenuCard = ({ item }: { item: Item }) => {
   return (
-    <div className=" border rounded p-3 w-[49%] mb-3">
-      <h3 className="font-bold text-lg">{item.name}</h3>
-      <p className="font-light mt-1 text-sm">{item.description}</p>
-      <p className="mt-7">{item.price}</p>
+    <div className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden">
+      <div className="p-4">
+        <div className="flex justify-between items-start">
+          <h3 className="font-semibold text-lg text-gray-800">{item.name}</h3>
+          <div className="flex items-center text-red-600 font-medium">
+            <DollarSign className="w-4 h-4 mr-1" />
+            <span>{item.price}</span>
+          </div>
+        </div>
+        <p className="text-gray-600 mt-2 text-sm leading-relaxed">{item.description}</p>
+      </div>
     </div>
   );
 };

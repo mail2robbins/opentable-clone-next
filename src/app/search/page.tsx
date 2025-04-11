@@ -2,6 +2,7 @@ import SearchCard from "@/components/SearchCard";
 import SearchHeader from "@/components/SearchHeader";
 import SearchSideBar from "@/components/SearchSideBar";
 import { PRICE, PrismaClient, Restaurant } from "@prisma/client";
+import { Search } from "lucide-react";
 
 const prisma = new PrismaClient();
 
@@ -118,28 +119,56 @@ const SearchPage = async ({
   );
   const locations = await fetchLocations();
   const cuisines = await fetchCuisines();
+  
   return (
-    <>
+    <div className="min-h-screen bg-gray-50">
       <SearchHeader city={searchParams.city} />
-      <div className="flex py-4 m-auto w-2/3 justify-between items-start">
-        <SearchSideBar
-          locations={locations}
-          cuisines={cuisines}
-          searchParams={searchParams}
-        />
-        {restaurants?.length === 0 ? (
-          <div className="w-5/6">
-            <p>No restaurants available matching the search term</p>
+      
+      {/* Main content container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Sidebar */}
+          <div className="w-full lg:w-1/4">
+            <div className="sticky top-0">
+              <div className="bg-white rounded-lg shadow-sm p-6">
+                <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                  <Search className="w-5 h-5 mr-2" />
+                  Search Filters
+                </h2>
+                <SearchSideBar
+                  locations={locations}
+                  cuisines={cuisines}
+                  searchParams={searchParams}
+                />
+              </div>
+            </div>
           </div>
-        ) : (
-          <div className="w-5/6">
-            {restaurants?.map((restaurant) => (
-              <SearchCard key={restaurant.id} restaurant={restaurant} />
-            ))}
+
+          {/* Results section */}
+          <div className="w-full lg:w-3/4">
+            {restaurants?.length === 0 ? (
+              <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+                <div className="max-w-md mx-auto">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    No restaurants found
+                  </h3>
+                  <p className="text-gray-600">
+                    We couldn't find any restaurants matching your search criteria. 
+                    Try adjusting your filters or search in a different location.
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {restaurants?.map((restaurant) => (
+                  <SearchCard key={restaurant.id} restaurant={restaurant} />
+                ))}
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

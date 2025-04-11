@@ -1,12 +1,28 @@
+import { Image } from "lucide-react";
+
 const RestaurantImages = ({ images }: { images: string[] }) => {
   return (
     <div>
-      <h1 className="font-bold text-3xl mt-10 mb-7 border-b pb-5">
-        {images.length.toString()} {images.length === 1 ? "photo" : "photos"}
-      </h1>
-      <div className="flex flex-wrap">
+      <div className="flex items-center mb-6">
+        <Image className="w-5 h-5 text-gray-500 mr-2" />
+        <h2 className="text-xl font-semibold text-gray-800">
+          {images.length} {images.length === 1 ? "Photo" : "Photos"}
+        </h2>
+      </div>
+      
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
         {images.map((image, index) => (
-          <img key={index} className="w-56 h-44 mr-1 mb-1" src={image} alt="" />
+          <div 
+            key={index} 
+            className="relative aspect-square rounded-lg overflow-hidden group"
+          >
+            <img 
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" 
+              src={image} 
+              alt={`Restaurant image ${index + 1}`} 
+            />
+            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </div>
         ))}
       </div>
     </div>
