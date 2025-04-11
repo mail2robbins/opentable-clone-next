@@ -6,7 +6,7 @@ const RestaurantDetailsHeader = ({
   location: string;
 }) => {
   return (
-    <div className="relative h-36 overflow-hidden shadow-lg">
+    <div className="relative h-52 overflow-hidden shadow-lg">
       {/* Background gradient with modern overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-[#0f1f47] to-[#5f6984] opacity-90 shadow-inner">
         {/* Subtle pattern overlay for texture */}

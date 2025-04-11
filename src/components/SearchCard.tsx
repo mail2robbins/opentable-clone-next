@@ -3,7 +3,7 @@ import Link from "next/link";
 import Price from "./Price";
 import { calculateReviewRatingAvg } from "@/utils/calculateReviewRatingAvg";
 import Stars from "./Stars";
-import { Clock, MapPin, Utensils } from "lucide-react";
+import { Clock, MapPin, Utensils, ArrowRight } from "lucide-react";
 
 const SearchCard = ({
   restaurant,
@@ -40,7 +40,7 @@ const SearchCard = ({
       : "text-amber-600";
 
   return (
-    <div className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300">
+    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
       <div className="flex flex-col sm:flex-row">
         {/* Image */}
         <div className="w-full sm:w-48 h-48 sm:h-auto relative">
@@ -49,16 +49,16 @@ const SearchCard = ({
             alt={restaurant.name} 
             className="w-full h-full object-cover"
           />
-          <div className="absolute top-2 right-2 bg-white px-2 py-1 rounded-md shadow-sm">
+          <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full shadow-md">
             <Price price={restaurant.price} />
           </div>
         </div>
         
         {/* Content */}
-        <div className="p-4 sm:p-5 flex-1">
+        <div className="p-5 sm:p-6 flex-1">
           <div className="flex flex-col h-full">
             <div className="flex-1">
-              <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-2">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
                 {restaurant.name}
               </h2>
               
@@ -69,7 +69,7 @@ const SearchCard = ({
                 </div>
                 
                 {ratingText && (
-                  <span className={`text-sm font-medium ${ratingColor}`}>
+                  <span className={`text-sm font-medium ${ratingColor} bg-${rating > 4 ? 'green' : rating > 3 ? 'blue' : 'amber'}-50 px-2 py-0.5 rounded-full`}>
                     {ratingText}
                   </span>
                 )}
@@ -85,43 +85,30 @@ const SearchCard = ({
               </p>
               
               {/* Details */}
-              <div className="flex flex-wrap gap-3 mb-4 text-sm text-gray-600">
+              <div className="flex flex-wrap gap-4 mb-4 text-sm text-gray-600">
                 <div className="flex items-center">
-                  <Utensils className="w-4 h-4 mr-1 text-gray-500" />
+                  <Utensils className="w-4 h-4 mr-1.5 text-red-500" />
                   <span className="capitalize">{restaurant.cuisine.name}</span>
                 </div>
                 <div className="flex items-center">
-                  <MapPin className="w-4 h-4 mr-1 text-gray-500" />
+                  <MapPin className="w-4 h-4 mr-1.5 text-red-500" />
                   <span className="capitalize">{restaurant.location.name}</span>
                 </div>
                 <div className="flex items-center">
-                  <Clock className="w-4 h-4 mr-1 text-gray-500" />
+                  <Clock className="w-4 h-4 mr-1.5 text-red-500" />
                   <span>{restaurant.open_time} - {restaurant.close_time}</span>
                 </div>
               </div>
             </div>
             
             {/* Action */}
-            <div className="mt-auto">
+            <div className="mt-auto pt-3 border-t border-gray-100">
               <Link 
                 href={`/restaurant/${restaurant.slug}`}
                 className="inline-flex items-center text-red-600 hover:text-red-700 font-medium transition-colors duration-200"
               >
                 View more information
-                <svg 
-                  className="w-4 h-4 ml-1" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24" 
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={2} 
-                    d="M9 5l7 7-7 7" 
-                  />
-                </svg>
+                <ArrowRight className="w-4 h-4 ml-1" />
               </Link>
             </div>
           </div>
