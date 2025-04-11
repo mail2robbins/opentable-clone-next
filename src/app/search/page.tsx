@@ -153,7 +153,7 @@ const SearchPage = async ({
                     No restaurants found
                   </h3>
                   <p className="text-gray-600">
-                    We couldn't find any restaurants matching your search criteria. 
+                    We couldn&apos;t find any restaurants matching your search criteria. 
                     Try adjusting your filters or search in a different location.
                   </p>
                 </div>
