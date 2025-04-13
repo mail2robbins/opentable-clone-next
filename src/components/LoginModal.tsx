@@ -94,13 +94,13 @@ export default function LoginModal({ isSignIn }: { isSignIn: boolean }) {
   };
   
   return (
-    <div>
+    <div className="w-full md:w-auto">
       <button
-        className={`${
+        className={`w-full md:w-auto ${
           isSignIn 
             ? "bg-red-600 hover:bg-red-700 text-white" 
             : "bg-white text-gray-700 border border-gray-200 hover:bg-gray-50"
-        } transition-all duration-200 border p-1.5 px-4 rounded-full text-sm font-medium shadow-sm hover:shadow-md active:scale-95 flex items-center space-x-1`}
+        } transition-all duration-200 border p-2 md:p-1.5 px-4 rounded-xl md:rounded-full text-sm font-medium shadow-sm hover:shadow-md active:scale-95 flex items-center justify-center md:justify-start space-x-2`}
         onClick={handleOpen}
       >
         {isSignIn ? (
