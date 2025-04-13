@@ -112,50 +112,66 @@ const NavBar = () => {
 
       {/* Mobile menu */}
       <div 
-        className={`${
-          isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-        } md:hidden overflow-hidden transition-all duration-300 ease-in-out`}
+        className={`fixed inset-x-0 top-16 transform ${
+          isMenuOpen ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0 pointer-events-none"
+        } md:hidden transition-all duration-300 ease-in-out bg-white border-t shadow-lg`}
       >
-        <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t">
+        <div className="px-4 py-6 space-y-6">
           {/* Mobile search */}
-          {/* <div className="px-3 py-2">
+          {/* <div className="relative">
             <div className="relative group">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Search className="h-5 w-5 text-gray-400 group-hover:text-gray-500 transition-colors duration-200" />
+                <Search className="h-5 w-5 text-gray-400" />
               </div>
               <input
                 type="text"
-                className="block w-full pl-10 pr-3 py-2 border border-gray-200 rounded-full leading-5 bg-gray-50 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:ring-red-500 focus:border-transparent sm:text-sm transition-all duration-200 ease-in-out hover:bg-white hover:border-gray-300"
+                className="block w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-lg bg-gray-50 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-base transition-all duration-200"
                 placeholder="Search restaurants..."
               />
             </div>
           </div> */}
           
           {data?.firstName ? (
-            <div className="flex flex-col space-y-2 px-3 py-2">
-              <div className="flex items-center space-x-2 text-gray-700 group">
-                <div className="bg-gray-100 rounded-full p-1.5 group-hover:bg-gray-200 transition-colors duration-200">
-                  <User className="h-5 w-full text-gray-600" />
+            <div className="space-y-4">
+              {/* User Profile Section */}
+              <div className="bg-gray-50 rounded-xl p-4">
+                <div className="flex items-center space-x-3">
+                  <div className="bg-white rounded-full p-2 shadow-sm">
+                    <User className="h-6 w-6 text-gray-700" />
+                  </div>
+                  <div>
+                    <div className="font-medium text-gray-900">{data.firstName}</div>
+                    <div className="text-sm text-gray-500">Welcome back!</div>
+                  </div>
                 </div>
-                <span className="font-medium">{data.firstName}</span>
               </div>
-              <button
-                className="flex items-center justify-center space-x-1 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md active:scale-95 w-full"
-                onClick={() => signout()}
-              >
-                <LogOut className="h-4 w-full" />
-                <span>Sign Out</span>
-              </button>
+              
+              {/* Actions */}
+              <div className="space-y-3">
+                <button
+                  onClick={() => signout()}
+                  className="flex items-center justify-center w-full space-x-2 bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-xl font-medium transition-all duration-200 shadow-sm hover:shadow-md active:scale-98"
+                >
+                  <LogOut className="h-5 w-5" />
+                  <span>Sign Out</span>
+                </button>
+              </div>
             </div>
           ) : (
-            <div className="relative px-3 py-2">
-              <div className="flex flex-col space-y-2">
-                <LoginModal isSignIn={true} />
-                <LoginModal isSignIn={false} />
-              </div>
-              {loading && (
-                <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 rounded-md">
-                  <CircularProgress size={24} />
+            <div className="space-y-3">
+              {!loading ? (
+                <>
+                  <div className="grid gap-3">
+                    <LoginModal isSignIn={true} />
+                    <LoginModal isSignIn={false} />
+                  </div>
+                  <p className="text-center text-sm text-gray-500 mt-4">
+                    Sign in to access your OpenTable account
+                  </p>
+                </>
+              ) : (
+                <div className="flex justify-center py-4">
+                  <CircularProgress size={28} />
                 </div>
               )}
             </div>
