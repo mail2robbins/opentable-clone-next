@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import prisma from "@/lib/prisma";
+import { Booking } from "@prisma/client";
 
 export async function GET() {
   try {
@@ -29,7 +30,7 @@ export async function GET() {
       },
     });
 
-    const formattedBookings = bookings.map(booking => ({
+    const formattedBookings = bookings.map((booking: Booking & { restaurant: { name: string } }) => ({
       id: booking.id,
       restaurantName: booking.restaurant.name,
       date: booking.booking_time.toISOString(),

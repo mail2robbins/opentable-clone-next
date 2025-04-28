@@ -74,7 +74,7 @@ export default function ReservationList() {
   if (bookings.length === 0) {
     return (
       <div className="text-center p-8 bg-gray-50 rounded-lg">
-        <p className="text-gray-600">You don't have any bookings yet.</p>
+        <p className="text-gray-600">You don&apos;t have any bookings yet.</p>
       </div>
     );
   }
