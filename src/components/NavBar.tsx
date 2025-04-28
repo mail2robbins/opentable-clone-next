@@ -124,6 +124,7 @@ const NavBar = () => {
               <Link
                 href="/reservations"
                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-red-600 hover:bg-gray-50"
+                onClick={() => setIsMenuOpen(false)}
               >
                 My Reservations
               </Link>
@@ -135,7 +136,7 @@ const NavBar = () => {
               </div>
               <button
                 className="w-full flex items-center justify-center space-x-1 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-200"
-                onClick={() => signout()}
+                onClick={() => { setIsMenuOpen(false); signout(); }}
               >
                 <LogOut className="h-4 w-4" />
                 <span>Sign Out</span>
@@ -146,8 +147,12 @@ const NavBar = () => {
               {!loading ? (
                 <>
                   <div className="grid gap-3">
-                    <LoginModal isSignIn={true} />
-                    <LoginModal isSignIn={false} />
+                    <div onClick={() => setIsMenuOpen(false)}>
+                      <LoginModal isSignIn={true} />
+                    </div>
+                    <div onClick={() => setIsMenuOpen(false)}>
+                      <LoginModal isSignIn={false} />
+                    </div>
                   </div>
                   <p className="text-center text-sm text-gray-500 mt-4">
                     Sign in to access your OpenTable account
