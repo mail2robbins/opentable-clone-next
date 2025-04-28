@@ -48,12 +48,12 @@ export default function ReservationList() {
       const response = await fetch(`/api/reservations/${bookingId}`, {
         method: "DELETE",
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || "Failed to cancel booking");
       }
-      
+
       // Remove the cancelled booking from the list
       setBookings(bookings.filter(booking => booking.id !== bookingId));
     } catch (err) {
@@ -74,7 +74,7 @@ export default function ReservationList() {
     return (
       <div className="text-red-600 text-center p-4 bg-red-50 rounded-lg">
         <p className="font-medium">{error}</p>
-        <button 
+        <button
           onClick={() => setError(null)}
           className="mt-2 text-sm text-red-600 hover:text-red-800 underline"
         >
@@ -101,15 +101,10 @@ export default function ReservationList() {
         >
           <div className="relative h-48 w-full">
             {booking.restaurantImage ? (
-              <Image
+              <img
                 src={booking.restaurantImage}
                 alt={booking.restaurantName}
-                fill
                 className="object-cover"
-                onError={(e) => {
-                  console.error("Image load error:", booking.restaurantImage);
-                  e.currentTarget.src = "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmVzdGF1cmFudHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60";
-                }}
               />
             ) : (
               <div className="w-full h-full bg-gray-200 flex items-center justify-center">
