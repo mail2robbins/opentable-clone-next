@@ -33,7 +33,6 @@ export default function ReservationList() {
         throw new Error(errorData.error || "Failed to fetch bookings");
       }
       const data = await response.json();
-      console.log("Fetched bookings:", data); // Debug log
       setBookings(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load bookings");
@@ -99,12 +98,12 @@ export default function ReservationList() {
           key={booking.id}
           className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200"
         >
-          <div className="relative h-48 w-full">
+          <div className="relative h-48 w-full overflow-hidden rounded-t-lg">
             {booking.restaurantImage ? (
               <img
                 src={booking.restaurantImage}
                 alt={booking.restaurantName}
-                className="object-cover"
+                className="w-full h-full object-cover"
               />
             ) : (
               <div className="w-full h-full bg-gray-200 flex items-center justify-center">

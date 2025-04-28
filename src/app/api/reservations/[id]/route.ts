@@ -39,36 +39,16 @@ export async function DELETE(
       userEmail: userEmail
     });
 
-    const booking = await prisma.booking.findUnique({
-      where: {
-        id: parseInt(params.id),
-      },
+    const bookingId = parseInt(params.id);
+
+    // First, delete related BookingsOnTables records
+    await prisma.bookingsOnTables.deleteMany({
+      where: { booking_id: bookingId },
     });
 
-    if (!booking) {
-      console.log("Booking not found:", params.id);
-      return NextResponse.json(
-        { error: "Booking not found" },
-        { status: 404 }
-      );
-    }
-
-    if (booking.booker_email !== userEmail) {
-      console.log("Booking email mismatch:", {
-        bookingEmail: booking.booker_email,
-        userEmail: userEmail
-      });
-      return NextResponse.json(
-        { error: "Unauthorized" },
-        { status: 401 }
-      );
-    }
-
-    // Delete the booking
+    // Then, delete the booking
     await prisma.booking.delete({
-      where: {
-        id: parseInt(params.id),
-      },
+      where: { id: bookingId },
     });
 
     console.log("Successfully deleted booking:", params.id);
