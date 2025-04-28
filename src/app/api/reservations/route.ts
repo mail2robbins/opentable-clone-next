@@ -43,18 +43,17 @@ export async function GET() {
         },
       },
       orderBy: {
-        booking_time: "asc",
+        booking_time: "desc",
       },
     });
 
-    console.log("Raw bookings data:", bookings); // Debug log
 
     const formattedBookings = bookings.map((booking: Booking & { restaurant: { name: string; main_image: string } }) => {
       const formattedBooking = {
         id: booking.id,
         restaurantName: booking.restaurant.name,
         restaurantImage: booking.restaurant.main_image,
-        date: booking.booking_time.toISOString(),
+        date: new Date(booking.booking_time).toLocaleString(),
         partySize: booking.number_of_people,
         status: "confirmed",
       };
