@@ -1,21 +1,29 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ReservationList from "@/components/ReservationList";
+import { useAuthenticationContext } from "@/app/context/AuthContext";
 
 export default function ReservationsPage() {
-  const { data: session } = useSession();
+  const { data: user, loading } = useAuthenticationContext();
   const router = useRouter();
 
   useEffect(() => {
-    if (!session) {
-      router.push("/api/auth/signin");
+    if (!loading && !user) {
+      router.push("/login");
     }
-  }, [session, router]);
+  }, [user, loading, router]);
 
-  if (!session) {
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-600"></div>
+      </div>
+    );
+  }
+
+  if (!user) {
     return null;
   }
 

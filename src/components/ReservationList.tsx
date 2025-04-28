@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
-import { useSession } from "next-auth/react";
+import { useAuthenticationContext } from "@/app/context/AuthContext";
 import { CircularProgress } from "@mui/material";
 import { XCircle } from "lucide-react";
 
@@ -17,7 +17,7 @@ export default function ReservationList() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { data: session } = useSession();
+  const { data: user } = useAuthenticationContext();
 
   useEffect(() => {
     fetchBookings();

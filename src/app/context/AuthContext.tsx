@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import { useState, createContext, useEffect } from "react";
+import { useState, createContext, useEffect, useContext } from "react";
 import { getCookie } from "cookies-next";
 
 interface User {
@@ -29,6 +29,15 @@ export const AuthenticationContext = createContext<AuthState>({
   error: null,
   setAuthState: () => {},
 });
+
+// Custom hook to use the authentication context
+export const useAuthenticationContext = () => {
+  const context = useContext(AuthenticationContext);
+  if (!context) {
+    throw new Error("useAuthenticationContext must be used within an AuthContext provider");
+  }
+  return context;
+};
 
 const AuthContext = ({ children }: { children: React.ReactNode }) => {
   const [authState, setAuthState] = useState<State>({

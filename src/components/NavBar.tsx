@@ -79,6 +79,12 @@ const NavBar = () => {
           <div className="hidden md:flex md:items-center md:space-x-4">
             {data?.firstName ? (
               <div className="flex items-center space-x-4">
+                <Link 
+                  href="/reservations" 
+                  className="flex items-center space-x-2 text-gray-900 hover:text-red-600 transition-colors duration-200"
+                >
+                  <span className="font-medium">My Reservations</span>
+                </Link>
                 <div className="flex items-center space-x-2 text-gray-900 group">
                   <div className="bg-gray-100 rounded-full p-1.5 group-hover:bg-gray-200 transition-colors duration-200">
                     <User className="h-5 w-5 text-gray-700" />
@@ -111,52 +117,30 @@ const NavBar = () => {
       </div>
 
       {/* Mobile menu */}
-      <div 
-        className={`fixed inset-x-0 top-16 transform ${
-          isMenuOpen ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0 pointer-events-none"
-        } md:hidden transition-all duration-300 ease-in-out bg-white border-t shadow-lg`}
-      >
-        <div className="px-4 py-6 space-y-6">
-          {/* Mobile search */}
-          {/* <div className="relative">
-            <div className="relative group">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Search className="h-5 w-5 text-gray-400" />
-              </div>
-              <input
-                type="text"
-                className="block w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-lg bg-gray-50 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-base transition-all duration-200"
-                placeholder="Search restaurants..."
-              />
-            </div>
-          </div> */}
-          
+      <div className={`md:hidden ${isMenuOpen ? "block" : "hidden"}`}>
+        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           {data?.firstName ? (
-            <div className="space-y-4">
-              {/* User Profile Section */}
-              <div className="bg-gray-50 rounded-xl p-4">
-                <div className="flex items-center space-x-3">
-                  <div className="bg-white rounded-full p-2 shadow-sm">
-                    <User className="h-6 w-6 text-gray-700" />
-                  </div>
-                  <div>
-                    <div className="font-medium text-gray-900">{data.firstName}</div>
-                    <div className="text-sm text-gray-500">Welcome back!</div>
-                  </div>
+            <>
+              <Link
+                href="/reservations"
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-red-600 hover:bg-gray-50"
+              >
+                My Reservations
+              </Link>
+              <div className="flex items-center px-3 py-2">
+                <div className="bg-gray-100 rounded-full p-1.5 mr-2">
+                  <User className="h-5 w-5 text-gray-700" />
                 </div>
+                <span className="font-medium text-gray-900">{data.firstName}</span>
               </div>
-              
-              {/* Actions */}
-              <div className="space-y-3">
-                <button
-                  onClick={() => signout()}
-                  className="flex items-center justify-center w-full space-x-2 bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-xl font-medium transition-all duration-200 shadow-sm hover:shadow-md active:scale-98"
-                >
-                  <LogOut className="h-5 w-5" />
-                  <span>Sign Out</span>
-                </button>
-              </div>
-            </div>
+              <button
+                className="w-full flex items-center justify-center space-x-1 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-200"
+                onClick={() => signout()}
+              >
+                <LogOut className="h-4 w-4" />
+                <span>Sign Out</span>
+              </button>
+            </>
           ) : (
             <div className="space-y-3">
               {!loading ? (

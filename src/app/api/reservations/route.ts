@@ -1,22 +1,38 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
+import { cookies } from "next/headers";
 import prisma from "@/lib/prisma";
 import { Booking } from "@prisma/client";
 
 export async function GET() {
   try {
-    const session = await getServerSession();
+    const cookieStore = cookies();
+    const jwt = cookieStore.get("opentablejwt")?.value;
     
-    if (!session?.user?.email) {
+    if (!jwt) {
       return NextResponse.json(
         { error: "Unauthorized" },
         { status: 401 }
       );
     }
 
+    // Get user from JWT token
+    const userResponse = await fetch("https://opentable-clone-next-liard.vercel.app/api/auth/me", {
+      headers: { Authorization: `Bearer ${jwt}` },
+    });
+
+    if (!userResponse.ok) {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
+    const userData = await userResponse.json();
+    const userEmail = userData.email;
+
     const bookings = await prisma.booking.findMany({
       where: {
-        booker_email: session.user.email,
+        booker_email: userEmail,
       },
       include: {
         restaurant: {
