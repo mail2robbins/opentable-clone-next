@@ -29,12 +29,14 @@ export default function ReservationList() {
     try {
       const response = await fetch("/api/reservations");
       if (!response.ok) {
-        throw new Error("Failed to fetch bookings");
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to fetch bookings");
       }
       const data = await response.json();
+      console.log("Fetched bookings:", data); // Debug log
       setBookings(data);
     } catch (err) {
-      setError("Failed to load bookings");
+      setError(err instanceof Error ? err.message : "Failed to load bookings");
     } finally {
       setLoading(false);
     }
@@ -42,18 +44,21 @@ export default function ReservationList() {
 
   const handleCancelBooking = async (bookingId: number) => {
     try {
+      setError(null);
       const response = await fetch(`/api/reservations/${bookingId}`, {
         method: "DELETE",
       });
       
       if (!response.ok) {
-        throw new Error("Failed to cancel booking");
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to cancel booking");
       }
       
       // Remove the cancelled booking from the list
       setBookings(bookings.filter(booking => booking.id !== bookingId));
     } catch (err) {
-      setError("Failed to cancel booking");
+      setError(err instanceof Error ? err.message : "Failed to cancel booking");
+      console.error("Error cancelling booking:", err);
     }
   };
 
@@ -67,8 +72,14 @@ export default function ReservationList() {
 
   if (error) {
     return (
-      <div className="text-red-600 text-center p-4">
-        {error}
+      <div className="text-red-600 text-center p-4 bg-red-50 rounded-lg">
+        <p className="font-medium">{error}</p>
+        <button 
+          onClick={() => setError(null)}
+          className="mt-2 text-sm text-red-600 hover:text-red-800 underline"
+        >
+          Dismiss
+        </button>
       </div>
     );
   }
@@ -89,12 +100,22 @@ export default function ReservationList() {
           className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200"
         >
           <div className="relative h-48 w-full">
-            <Image
-              src={booking.restaurantImage}
-              alt={booking.restaurantName}
-              fill
-              className="object-cover"
-            />
+            {booking.restaurantImage ? (
+              <Image
+                src={booking.restaurantImage}
+                alt={booking.restaurantName}
+                fill
+                className="object-cover"
+                onError={(e) => {
+                  console.error("Image load error:", booking.restaurantImage);
+                  e.currentTarget.src = "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmVzdGF1cmFudHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60";
+                }}
+              />
+            ) : (
+              <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                <span className="text-gray-400">No image available</span>
+              </div>
+            )}
           </div>
           <div className="p-4">
             <div className="flex justify-between items-start">
