@@ -108,6 +108,7 @@ const RestaurantReservation = ({
                 className="w-full border border-gray-300 rounded-md pl-10 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition duration-200"
                 dateFormat="MMMM d"
                 id="date"
+                minDate={new Date()}
               />
             </div>
           </div>
