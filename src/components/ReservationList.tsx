@@ -5,10 +5,12 @@ import { format } from "date-fns";
 import { useAuthenticationContext } from "@/app/context/AuthContext";
 import { CircularProgress } from "@mui/material";
 import { XCircle } from "lucide-react";
+import Image from "next/image";
 
 interface Booking {
   id: number;
   restaurantName: string;
+  restaurantImage: string;
   date: string;
   partySize: number;
 }
@@ -80,30 +82,39 @@ export default function ReservationList() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {bookings.map((booking) => (
         <div
           key={booking.id}
-          className="bg-white p-6 rounded-lg shadow-sm border border-gray-200"
+          className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200"
         >
-          <div className="flex justify-between items-start">
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900">
-                {booking.restaurantName}
-              </h3>
-              <div className="mt-2 space-y-1">
-                <p className="text-gray-600">
-                  Date: {format(new Date(booking.date), "MMMM d, yyyy")}
-                </p>
-                <p className="text-gray-600">
-                  Party Size: {booking.partySize} people
-                </p>
+          <div className="relative h-48 w-full">
+            <Image
+              src={booking.restaurantImage}
+              alt={booking.restaurantName}
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div className="p-4">
+            <div className="flex justify-between items-start">
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900">
+                  {booking.restaurantName}
+                </h3>
+                <div className="mt-2 space-y-1">
+                  <p className="text-gray-600">
+                    Date: {format(new Date(booking.date), "MMMM d, yyyy")}
+                  </p>
+                  <p className="text-gray-600">
+                    Party Size: {booking.partySize} people
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="flex items-center space-x-4">
               <button
                 onClick={() => handleCancelBooking(booking.id)}
-                className="text-red-600 hover:text-red-800 transition-colors"
+                className="text-red-600 hover:text-red-800 transition-colors p-2 hover:bg-red-50 rounded-full"
+                title="Cancel booking"
               >
                 <XCircle className="w-5 h-5" />
               </button>

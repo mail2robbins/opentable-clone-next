@@ -38,6 +38,7 @@ export async function GET() {
         restaurant: {
           select: {
             name: true,
+            main_image: true,
           },
         },
       },
@@ -46,9 +47,10 @@ export async function GET() {
       },
     });
 
-    const formattedBookings = bookings.map((booking: Booking & { restaurant: { name: string } }) => ({
+    const formattedBookings = bookings.map((booking: Booking & { restaurant: { name: string; main_image: string } }) => ({
       id: booking.id,
       restaurantName: booking.restaurant.name,
+      restaurantImage: booking.restaurant.main_image,
       date: booking.booking_time.toISOString(),
       partySize: booking.number_of_people,
       status: "confirmed", // Since we don't have a status field in Booking model
