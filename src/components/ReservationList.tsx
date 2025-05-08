@@ -144,13 +144,16 @@ export default function ReservationList() {
                   </p>
                 </div>
               </div>
-              <button
-                onClick={() => setConfirmId(booking.id)}
-                className="text-red-600 hover:text-red-800 transition-colors p-2 hover:bg-red-50 rounded-full mt-2"
-                title="Cancel booking"
-              >
-                <XCircle className="w-5 h-5" />
-              </button>
+              {
+                new Date(booking.date) >= new Date() && (<button
+                  onClick={() => setConfirmId(booking.id)}
+                  className="text-red-600 hover:text-red-800 transition-colors p-2 hover:bg-red-50 rounded-full mt-2"
+                  title="Cancel booking"
+                >
+                  <XCircle className="w-5 h-5" />
+                </button>)
+              }
+
               {/* Confirmation Dialog */}
               {confirmId === booking.id && (
                 <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-30">
