@@ -13,7 +13,7 @@ const useAvailability = () => {
     const fetchAvailability = async ({ slug, partySize, day, time }: { slug: string, partySize: string, day: string, time: string }) => {
         setLoading(true)
         try {
-            const response = await axios.get(`https://opentable-clone-next-liard.vercel.app/api/restaurant/${slug}/availability?day=${day}&time=${time}&partySize=${partySize}`)
+            const response = await axios.get(`/api/restaurant/${slug}/availability?day=${day}&time=${time}&partySize=${partySize}`)
             setData(response.data)
             setLoading(false)
         } catch (err: any) {

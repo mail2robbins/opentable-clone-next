@@ -55,7 +55,7 @@ const AuthContext = ({ children }: { children: React.ReactNode }) => {
       }
 
       const fetchResponse = await axios.get(
-        `https://opentable-clone-next-liard.vercel.app/api/auth/me`,
+        `/api/auth/me`,
         {
           headers: { Authorization: `Bearer ${jwt}` },
         }
