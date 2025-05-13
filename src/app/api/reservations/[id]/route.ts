@@ -19,7 +19,7 @@ export async function DELETE(
     }
 
     // Get user from JWT token
-    const userResponse = await fetch("https://opentable-clone-next-liard.vercel.app/api/auth/me", {
+    const userResponse = await fetch("/api/auth/me", {
       headers: { Authorization: `Bearer ${jwt}` },
     });
 
