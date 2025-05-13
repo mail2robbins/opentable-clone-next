@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import prisma from "@/lib/prisma";
+import { headers } from "next/headers";
 
 export async function DELETE(
   request: Request,
@@ -18,8 +19,13 @@ export async function DELETE(
       );
     }
 
-    // Get user from JWT token
-    const userResponse = await fetch("/api/auth/me", {
+    // Get the host from the request headers
+    const headersList = headers();
+    const host = headersList.get("host");
+    const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+
+    // Get user from JWT token using full URL
+    const userResponse = await fetch(`${protocol}://${host}/api/auth/me`, {
       headers: { Authorization: `Bearer ${jwt}` },
     });
 
